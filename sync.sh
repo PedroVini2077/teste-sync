@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Script minimalista de sincronização Git (versão silenciosa com SSH)
+# Script minimalista de sincronização Git (super silencioso)
 
 # Mensagem do commit (padrão se não passar nada)
 MSG=${1:-"Commit de teste"}
@@ -11,7 +11,7 @@ echo "🔄 Adicionando arquivos..."
 git add . --quiet
 
 echo "📝 Fazendo commit..."
-if git commit -m "$MSG" --quiet 2>/dev/null; then
+if git commit -m "$MSG" --quiet >/dev/null 2>&1; then
     HASH=$(git rev-parse --short HEAD)
     echo "✅ Commit realizado com sucesso: $HASH"
 else
@@ -19,7 +19,7 @@ else
 fi
 
 echo "🚀 Enviando para o GitHub..."
-if git push origin "$BRANCH" --quiet >/dev/null; then
+if git push origin "$BRANCH" --quiet >/dev/null 2>&1; then
     echo "🎉 Push concluído com sucesso!"
 else
     echo "❌ Erro ao enviar, verifique!"
